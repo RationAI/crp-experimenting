@@ -225,7 +225,7 @@ class FeatureVisualization:
             single_data = t.result()[0]
             single_label = t.result()[1]
             data_returned.append(single_data)
-            labels_returned.append(single_label)
+            labels_returned.append(int(single_label))
 
         data_returned = torch.cat(data_returned, dim=0)
         return data_returned, labels_returned
