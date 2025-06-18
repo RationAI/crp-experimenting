@@ -1,0 +1,6 @@
+defaults:
+  - /data/transforms@transforms: test
+
+_target_: src.data.datasets.ProstateCancer
+uris: 
+  - "mlflow-artifacts:/65/d9303ae46e9f41ce832e02d2e0777ead/artifacts/Prostate - val"

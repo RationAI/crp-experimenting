@@ -1,0 +1,27 @@
+defaults:
+  - hydra: default
+  - logger: mlflow
+  - /data/datasets@data.train: prostate_cancer/train
+  - /data/datasets@data.val: prostate_cancer/val
+  - /data/datasets@data.test: prostate_cancer/test
+  # - /data/datasets@data.predict: prostate_cancer/predict
+  - _self_
+
+seed: ${random_seed:}
+checkpoint: null
+
+
+data:
+  _target_: src.data.DataModule
+  batch_size: 1
+  num_workers: 2
+
+metadata:
+  experiment_name: Prostate
+  run_name: "Develop: Prostate TL VGG16"
+  description: "Development and reproduction of Tile Level (TL) VGG16"
+  hyperparams:
+    max_epochs: ${trainer.max_epochs}
+    lr: ${model.optimizer.lr}
+    batch_size: ${data.batch_size}
+    val_check_interval: ${trainer.val_check_interval}

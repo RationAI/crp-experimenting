@@ -1,0 +1,5 @@
+defaults:
+  - /data/transforms@transforms: test
+
+_target_: src.data.datasets.ProstateCancerPredict
+uris: []

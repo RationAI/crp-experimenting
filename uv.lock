@@ -488,6 +488,12 @@ wheels = [
 ]
 
 [[package]]
+name = "pillow-simd"
+version = "9.5.0.post2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/d0/d9/5cf8d7c9ecaf389fe62570a5287036611f1328796ed6e59abbc2dc09f4a6/Pillow-SIMD-9.5.0.post2.tar.gz", hash = "sha256:39dfb027bdaa3e35597df9a1c42ea97091f32bc83f25ab9cab0845b3c4bad331", size = 904623 }
+
+[[package]]
 name = "platformdirs"
 version = "4.3.7"
 source = { registry = "https://pypi.org/simple" }
@@ -821,8 +827,11 @@ dependencies = [
     { name = "ipykernel" },
     { name = "matplotlib" },
     { name = "numpy" },
+    { name = "pillow" },
+    { name = "pillow-simd" },
     { name = "scipy" },
     { name = "torch" },
+    { name = "torchvision" },
     { name = "tqdm" },
     { name = "zennit" },
 ]
@@ -832,8 +841,11 @@ requires-dist = [
     { name = "ipykernel", specifier = ">=6.29.5" },
     { name = "matplotlib" },
     { name = "numpy", specifier = "<=1.23.5" },
+    { name = "pillow", specifier = ">=11.2.1" },
+    { name = "pillow-simd", specifier = ">=9.5.0.post2" },
     { name = "scipy", specifier = ">=1.15.2" },
     { name = "torch", specifier = ">=1.7.0,<2.0.0" },
+    { name = "torchvision", specifier = ">=0.14.1" },
     { name = "tqdm" },
     { name = "zennit", specifier = "<=0.4.6" },
 ]

@@ -1,0 +1,2 @@
+_target_: src.modeling.backbone.vgg16
+weights: IMAGENET1K_V1
