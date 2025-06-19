@@ -171,6 +171,8 @@ cython_debug/
 .idea/
 
 tutorials/ImageNet_data/
+tutorials/VGG16_ImageNet/
+
 *.zip
 
 LRP-eXplains-Transformers-main
