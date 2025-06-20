@@ -1,0 +1,3 @@
+Predicted label ('American chameleon', 'anole', 'Anolis carolinensis') (id: 40) with probability 0.8611383438110352
+Showing layer features.40
+Top 5 concepts are [469, 71, 35, 161, 89] with relevance [8.981099724769592, 4.714212194085121, 4.687587916851044, 1.9150454550981522, 1.7952453345060349]

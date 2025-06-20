@@ -1,0 +1,3 @@
+Predicted label ('dogsled', 'dog sled', 'dog sleigh') (id: 537) with probability 0.6210100650787354
+Showing layer features.40
+Top 5 concepts are [151, 133, 310, 139, 472] with relevance [4.60028350353241, 3.6423996090888977, 2.8069093823432922, 2.796170301735401, 2.272283099591732]
