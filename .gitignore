@@ -172,6 +172,8 @@ cython_debug/
 
 tutorials/ImageNet_data/
 tutorials/VGG16_ImageNet/
+tutorials/VGG16_Prostate/
+
 
 *.zip
 
