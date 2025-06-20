@@ -1,0 +1,3 @@
+Predicted label ('wolf spider', 'hunting spider') (id: 77) with probability 0.9947905540466309
+Showing layer features.40
+Top 5 concepts are [228, 243, 225, 71, 461] with relevance [5.406541749835014, 4.442749172449112, 4.101886972784996, 2.8595494106411934, 2.499457821249962]

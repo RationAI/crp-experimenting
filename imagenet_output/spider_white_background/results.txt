@@ -1,3 +1,0 @@
-Predicted label ('black widow', 'Latrodectus mactans') (id: 75) with probability 0.33559226989746094
-Showing layer features.40
-Top 5 concepts are [228, 461, 433, 299, 225] with relevance [18.007172644138336, 4.561866074800491, 2.690468542277813, 2.128196321427822, 1.8522046506404877]
