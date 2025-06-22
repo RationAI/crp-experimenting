@@ -1,0 +1,3 @@
+Predicted label ('snowmobile',) (id: 802) with probability 0.9905619025230408
+Showing layer features.40
+Top 5 concepts are [80, 262, 310, 71, 321] with relevance [15.466850996017456, 8.319612592458725, 3.9153601974248886, 3.5358939319849014, 2.7807727456092834]
