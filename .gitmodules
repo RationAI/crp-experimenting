@@ -1,0 +1,3 @@
+[submodule "LRP-eXplains-Transformers"]
+	path = LRP-eXplains-Transformers
+	url = https://github.com/rachtibat/LRP-eXplains-Transformers.git
