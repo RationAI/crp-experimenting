@@ -40,11 +40,11 @@ class OneLinearLayerClassifier(nn.Module):
 
 def get_model(model_type: str):
     model_type = model_type.lower()
-    if model_type == "conv":
+    if model_type == "mnist_conv":
         return OneConvLayerClassifier(), "one_layer_cnn_weights.pth"
-    if model_type == "linear":
+    if model_type == "mnist_linear":
         return OneLinearLayerClassifier(), "one_layer_linear_weights.pth"
-    raise ValueError(f"Unknown model_type '{model_type}', expected 'conv' or 'linear'.")
+    raise ValueError(f"Unknown model_type '{model_type}', expected 'mnist_conv' or 'mnist_linear'.")
 
 # ==========================================
 # 2. Download or Load Dataset (MNIST)
@@ -93,8 +93,8 @@ def train_and_save_weights(model, train_loader, weights_path: str):
 # 4. Main Execution Flow
 # ==========================================
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Train or load a one-layer MNIST model (conv or linear).")
-    parser.add_argument("--model-type", choices=["conv", "linear"], default="conv", help="Choose model architecture")
+    parser = argparse.ArgumentParser(description="Train or load a one-layer MNIST model (mnist_conv or mnist_linear).")
+    parser.add_argument("--model-type", choices=["mnist_conv", "mnist_linear"], default="mnist_conv", help="Choose model architecture")
     args = parser.parse_args()
 
     # A. Setup Data

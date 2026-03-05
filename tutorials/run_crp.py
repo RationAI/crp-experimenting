@@ -1,80 +1,27 @@
 import torch
 import torch.nn as nn
-from torch.utils.data import DataLoader
 import numpy as np
-import random
 
-from prepare_model import get_model, get_data
 import zennit.rules as z_rules
 from zennit.composites import LayerMapComposite
-from crp.attribution import CondAttribution
+from crp.attribution import AttentionAttribution
 from lxt.efficient import monkey_patch, monkey_patch_zennit
 from torchvision.models import vision_transformer
-from torchvision.models.vgg import vgg16_bn
-import torchvision.transforms as T
-from PIL import Image
 
-
-def set_determinism(seed: int = 42):
-    """Set all random seeds and disable non-deterministic algorithms."""
-    random.seed(seed)
-    np.random.seed(seed)
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed_all(seed)
-    # Disable cuDNN non-deterministic algorithms
-    torch.backends.cudnn.deterministic = True
-    torch.backends.cudnn.benchmark = False
-
-
-def load_sample_and_model(model_type: str, device: torch.device):
-    if model_type == "big_conv":
-        transform = T.Compose([
-            T.Resize(256),
-            T.CenterCrop(224),
-            T.ToTensor(),
-            T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-        ])
-        image = Image.open("tutorials/images/lizard.jpg")
-        data = transform(image).unsqueeze(0).to(device)
-        #target_class = 46  # green lizard class
-        target_class = 40  # chameleon class
-        model = vgg16_bn(True).to(device)
-        model.eval()
-        weights_path = None
-    elif model_type == "vit":
-        weights = vision_transformer.ViT_B_16_Weights.IMAGENET1K_V1
-        model = vision_transformer.vit_b_16(weights=weights).to(device)
-        model.eval()
-        image = Image.open("LRP-eXplains-Transformers/examples/PetImages/lizard.jpg").convert("RGB")
-        data = weights.transforms()(image).unsqueeze(0).to(device)
-        with torch.no_grad():
-            target_class = model(data).argmax().item()
-        weights_path = None
-    else:
-        _, test_data = get_data()
-        test_loader = DataLoader(test_data, batch_size=1, shuffle=False)
-        data, _ = next(iter(test_loader))
-        data = data.to(device)
-        model, weights_path = get_model(model_type)
-        model.load_state_dict(torch.load(weights_path))
-        model.eval()
-        model.to(device)
-        with torch.no_grad():
-            target_class = model(data).argmax().item()
-    return data, target_class, model, weights_path
+from utils import set_determinism, load_sample_and_model
 
 
 def run_attention_aware_crp(model, data, target_class, model_type: str):
     if model_type == "vit":
         monkey_patch(vision_transformer, verbose=True)
-    else:
-        monkey_patch(model, verbose=True)
+    # For non-transformer models, skip monkey_patch - standard Zennit is sufficient
     monkey_patch_zennit(verbose=True)
 
     composite = LayerMapComposite([
         (nn.Conv2d, z_rules.Gamma(0.25)),
         (nn.Linear, z_rules.Gamma(0.1)),
     ])
+    # composite = None
 
     data.requires_grad = True
     conditions = [{"y": target_class}]
@@ -84,7 +31,7 @@ def run_attention_aware_crp(model, data, target_class, model_type: str):
         mask[0, target_class] = 1.0
         return mask
 
-    attributor = CondAttribution(model)
+    attributor = AttentionAttribution(model)
     if model_type == "vit":
         def vit_heatmap_modifier(data, on_device=None):
             heatmap = data.grad.detach()
@@ -99,21 +46,23 @@ def run_attention_aware_crp(model, data, target_class, model_type: str):
 
 
 def save_relevance(model_type: str, relevance: np.ndarray):
-    if model_type == "linear":
+    if model_type == "mnist_linear":
         np.save("relevance_crp.npy", relevance)
-    elif model_type == "conv":
+    elif model_type == "mnist_conv":
         np.save("relevance_conv_crp.npy", relevance)
-    elif model_type == "big_conv":
-        np.save("relevance_big_conv_crp.npy", relevance)
+    elif model_type == "vgg16":
+        np.save("relevance_vgg16_crp.npy", relevance)
+    elif model_type == "resnet":
+        np.save("relevance_resnet_crp.npy", relevance)
     else:
-        np.save("relevance_vit_crp.npy", relevance)
+        np.save("relevance_vit_crp_no_composite.npy", relevance)
 
 
 def main():
     import argparse
 
     parser = argparse.ArgumentParser(description="Run CRP and save relevance for a model.")
-    parser.add_argument("--model-type", choices=["conv", "linear", "big_conv", "vit"], default="vit", help="Model architecture")
+    parser.add_argument("--model-type", choices=["mnist_conv", "mnist_linear", "vgg16", "resnet", "vit"], default="vit", help="Model architecture")
     parser.add_argument("--seed", type=int, default=42, help="Random seed for reproducibility")
     args = parser.parse_args()
 

@@ -9,7 +9,7 @@ import functools
 import inspect
 from tqdm import tqdm
 from zennit.composites import NameMapComposite, Composite
-from crp.attribution import CondAttribution
+from crp.attribution import CondAttribution, AttentionAttribution
 from crp.maximization import Maximization
 from crp.concepts import ChannelConcept, Concept
 from crp.statistics import Statistics
