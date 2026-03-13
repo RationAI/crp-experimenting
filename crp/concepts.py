@@ -16,7 +16,9 @@ class Concept:
 
         raise NotImplementedError("'Concept'class must be implemented!")
 
-    def reference_sampling(self, relevance, layer_name: str = None, max_target: str = "sum", abs_norm=True):
+    def reference_sampling(
+        self, relevance, layer_name: str = None, max_target: str = "sum", abs_norm=True
+    ):
 
         raise NotImplementedError("'Concept'class must be implemented!")
 
@@ -88,7 +90,6 @@ class ChannelConcept(Concept):
             mask = torch.zeros_like(grad[batch_id])
 
             for channel in c_n_map:
-            
                 mask[channel, c_n_map[channel]] = 1
 
             grad[batch_id] = grad[batch_id] * mask
@@ -116,7 +117,9 @@ class ChannelConcept(Concept):
 
         return rel_l
 
-    def reference_sampling(self, relevance, layer_name: str = None, max_target: str = "sum", abs_norm=True):
+    def reference_sampling(
+        self, relevance, layer_name: str = None, max_target: str = "sum", abs_norm=True
+    ):
         """
         Parameters:
             max_target: str. Either 'sum' or 'max'.
@@ -138,7 +141,7 @@ class ChannelConcept(Concept):
 
         if abs_norm:
             rel_l = rel_l / (torch.abs(rel_l).sum(-1).view(-1, 1) + 1e-10)
-        
+
         d_ch_sorted = torch.argsort(rel_l, dim=0, descending=True)
         rel_ch_sorted = torch.gather(rel_l, 0, d_ch_sorted)
         rf_ch_sorted = torch.gather(rf_neuron, 0, d_ch_sorted)
@@ -178,6 +181,7 @@ class AttentionHeadConcept(ChannelConcept):
 
             # grad shape: [batch, seq_len, hidden_dim]
             # Assume standard head dimension of 64 (ViT-B/16, ViT-L/16, etc.)
+            # TODO: universal dimension detection
             head_dim = 64
 
             mask = torch.zeros_like(grad[batch_id])

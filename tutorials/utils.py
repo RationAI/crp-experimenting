@@ -1,20 +1,17 @@
-import torch
-import torch.nn as nn
-from torch.utils.data import DataLoader
-import numpy as np
 import random
+
+import numpy as np
+import torch
 import torchvision.transforms as T
 from PIL import Image
-from torchvision.models import vision_transformer
+from prepare_model import get_data, get_model
+from torch.utils.data import DataLoader
+from torchvision.models import resnet50, vision_transformer
 from torchvision.models.vgg import vgg16_bn
-from torchvision.models import resnet50
-
-from prepare_model import get_model, get_data
 
 
 def set_determinism(seed: int = 42):
     """Set all random seeds and disable non-deterministic algorithms."""
-
     # Necessary to prevent non-determinism in GPU computations in zennit monkey patched backpropagation.
     random.seed(seed)
     np.random.seed(seed)
@@ -29,26 +26,30 @@ def set_determinism(seed: int = 42):
 
 def load_sample_and_model(model_type: str, device: torch.device):
     if model_type == "vgg16":
-        transform = T.Compose([
-            T.Resize(256),
-            T.CenterCrop(224),
-            T.ToTensor(),
-            T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-        ])
+        transform = T.Compose(
+            [
+                T.Resize(256),
+                T.CenterCrop(224),
+                T.ToTensor(),
+                T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+            ]
+        )
         image = Image.open("tutorials/lizard.jpg")
         data = transform(image).unsqueeze(0).to(device)
-        #target_class = 46  # green lizard class
+        # target_class = 46  # green lizard class
         target_class = 40  # chameleon class
         model = vgg16_bn(True).to(device)
         model.eval()
         weights_path = None
     elif model_type == "resnet":
-        transform = T.Compose([
-            T.Resize(256),
-            T.CenterCrop(224),
-            T.ToTensor(),
-            T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-        ])
+        transform = T.Compose(
+            [
+                T.Resize(256),
+                T.CenterCrop(224),
+                T.ToTensor(),
+                T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+            ]
+        )
         image = Image.open("tutorials/lizard.jpg")
         data = transform(image).unsqueeze(0).to(device)
         target_class = 40  # chameleon class

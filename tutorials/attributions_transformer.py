@@ -1,35 +1,36 @@
 # %% [markdown]
 # In a backward pass, PyTorch would usually pass the gradients from all neurons of a higher layer to the lower layers and mix them up, however CRP works by passing only specific parts of the gradients and zeroing out the others. Zennit replaces these gradients with actual attribution scores that flow from the last layer to the first one.
-# 
+#
 # In the Image **a)** you see, that we only pass the attributions of the neuron '0' in layer 'layer3' to the next layers. And then again pass only the attributions of neuron '0' and '2' in layer 'layer1' to the input.
 # If we were to implement this with a normal PyTorch [backward hook](https://pytorch.org/docs/stable/generated/torch.nn.modules.module.register_module_full_backward_hook.html) in layer 'layer1', we would write the following code that sets the input gradient to zero everywhere except for the neurons '0' and '2':
 
 # %%
-#%cd ..
-#%ls
+# %cd ..
+# %ls
 
 # %%
-import torch
-import torchvision
-from torchvision.models import vision_transformer
-
-from PIL import Image
-from IPython.display import display, Image as DisplayImage
 import itertools
 import types
 
+import torch
+import zennit.rules as z_rules
+from IPython.display import Image as DisplayImage
+from IPython.display import display
 from lxt.efficient import monkey_patch, monkey_patch_zennit
+from PIL import Image
+from torchvision.models import vision_transformer
+from zennit.composites import LayerMapComposite
+from zennit.image import imgify
 
 from crp.attribution import CondAttribution
 from crp.concepts import ChannelConcept
-from zennit.composites import LayerMapComposite
-import zennit.rules as z_rules
-from zennit.image import imgify
+
 
 # %%
 # 1. Monkey Patch FIRST (This makes the model "Attention-Aware")
 monkey_patch(vision_transformer, verbose=True)
-monkey_patch_zennit(verbose=True) 
+monkey_patch_zennit(verbose=True)
+
 
 # 2. Load Model (Standard PyTorch)
 def get_vit_imagenet(device="cuda"):
@@ -40,21 +41,24 @@ def get_vit_imagenet(device="cuda"):
         param.requires_grad = False
     return model, weights
 
+
 if not torch.cuda.is_available():
     raise RuntimeError("CUDA is required for this comparison; no GPU detected.")
 device = "cuda"
 model, weights = get_vit_imagenet(device)
 
 # 3. Load Image
-image = Image.open('tutorials/images/lizard.jpg').convert('RGB')
+image = Image.open("tutorials/images/lizard.jpg").convert("RGB")
 data = weights.transforms()(image).unsqueeze(0).to(device)
 data.requires_grad = True
 
 # %%
-composite = LayerMapComposite([
-    (torch.nn.Conv2d, z_rules.Gamma(0.25)),
-    (torch.nn.Linear, z_rules.Gamma(0.1)),
-])
+composite = LayerMapComposite(
+    [
+        (torch.nn.Conv2d, z_rules.Gamma(0.25)),
+        (torch.nn.Linear, z_rules.Gamma(0.1)),
+    ]
+)
 
 # Define the Concept (The Query)
 # ChannelConcept allows us to mask specific channels if we want.
@@ -71,16 +75,16 @@ print(model)
 # The `mask` method of the `ChannelConcept` class returns a function similar to the previous mask_hook function.
 # `ChannelConcept.mask` allows to mask individual channels as well as MLP neurons per batch.
 
+
 # %%
 # 1. Define the LXT-style modifier function
 def chanel_wise_heatmap_modifier(self, data, on_device=None):
-    """
-    Computes Relevance = Input * Gradient.
+    """Computes Relevance = Input * Gradient.
     Does NOT sum over channels (dim 1), preserving RGB info.
     """
     # Get the gradient
     grad = data.grad.detach()
-    
+
     # Handle device transfer if requested
     if on_device:
         grad = grad.to(on_device)
@@ -89,9 +93,10 @@ def chanel_wise_heatmap_modifier(self, data, on_device=None):
         data_fixed = data.detach()
 
     relevance = data_fixed * grad
-    
+
     # Return 4D tensor: (Batch, Channels, Height, Width)
     return relevance
+
 
 # 2. Monkey Patch your specific instance
 # This replaces the 'heatmap_modifier' method ONLY for this 'attributor' object.
@@ -117,14 +122,18 @@ grayscale_relevance = rgb_relevance.sum(0)
 grayscale_relevance = grayscale_relevance / grayscale_relevance.abs().max()
 
 # 3. Save
-imgify(grayscale_relevance.unsqueeze(0), symmetric=True, grid=(1, 1)).save('out/lxt_style_result.png')
+imgify(grayscale_relevance.unsqueeze(0), symmetric=True, grid=(1, 1)).save(
+    "out/lxt_style_result.png"
+)
 
 # %%
-composite = LayerMapComposite([
-    (torch.nn.Conv2d, z_rules.Gamma(0.25)),
-    (torch.nn.Linear, z_rules.Gamma(0.1)),
-#     (torch.nn.LayerNorm, z_rules.Pass()),
-])
+composite = LayerMapComposite(
+    [
+        (torch.nn.Conv2d, z_rules.Gamma(0.25)),
+        (torch.nn.Linear, z_rules.Gamma(0.1)),
+        #     (torch.nn.LayerNorm, z_rules.Pass()),
+    ]
+)
 
 prediction = model(data)
 target_class = prediction.argmax().item()
@@ -133,23 +142,20 @@ print(f"Explaining class: {target_class}")
 conditions = [{"y": target_class}]
 
 # Run Attribution with masking disabled for LRP equivalence
-attr = attributor(
-    data, 
-    conditions, 
-    composite, 
-    mask_map=None
-)
+attr = attributor(data, conditions, composite, mask_map=None)
 
 # Convert to grayscale and normalize
 heatmap_crp = attr.heatmap.sum(1)
 heatmap_crp = heatmap_crp / heatmap_crp.abs().max()
 
-imgify(heatmap_crp.detach().cpu(), symmetric=True, grid=(1, 1)).save('out/vit_crp_heatmap_norm.png')
+imgify(heatmap_crp.detach().cpu(), symmetric=True, grid=(1, 1)).save(
+    "out/vit_crp_heatmap_norm.png"
+)
 
 # %%
-lrp_blob = torch.load('LRP-eXplains-Transformers/examples/vit_lrp_heatmap_lizard.pt')
-lrp_heatmap = lrp_blob['heatmap'].to(heatmap_crp.device)
-lrp_class_idx = lrp_blob.get('class_idx', None)
+lrp_blob = torch.load("LRP-eXplains-Transformers/examples/vit_lrp_heatmap_lizard.pt")
+lrp_heatmap = lrp_blob["heatmap"].to(heatmap_crp.device)
+lrp_class_idx = lrp_blob.get("class_idx", None)
 print(f"LRP saved class idx: {lrp_class_idx}")
 
 # %%
@@ -159,8 +165,10 @@ print(f"LRP saved class idx: {lrp_class_idx}")
 
 def _capture_block_and_grad(block, label):
     captured = {}
+
     def _hook(_, __, out):
         captured["out"] = out
+
     handle = block.register_forward_hook(_hook)
     pred = model(data.requires_grad_())
     handle.remove()
@@ -169,10 +177,14 @@ def _capture_block_and_grad(block, label):
     out = captured["out"]
     print(f"Captured '{label}' output shape: {tuple(out.shape)}")
     target_logit = pred[0, target_class]
-    grad = torch.autograd.grad(target_logit, out, allow_unused=False, retain_graph=True)[0]
+    grad = torch.autograd.grad(
+        target_logit, out, allow_unused=False, retain_graph=True
+    )[0]
     if grad is None:
         raise RuntimeError(f"Gradient wrt '{label}' is None")
-    print(f"Gradient wrt '{label}' shape: {tuple(grad.shape)}, max={grad.abs().max().item():.3e}")
+    print(
+        f"Gradient wrt '{label}' shape: {tuple(grad.shape)}, max={grad.abs().max().item():.3e}"
+    )
     return grad
 
 
@@ -196,13 +208,19 @@ if grad_single.dim() == 3:
     elif heatmap_single.size(1) == 196:
         pass
     else:
-        raise RuntimeError(f"Unexpected token count: {heatmap_single.size(1)}. Expected 196 or 197.")
+        raise RuntimeError(
+            f"Unexpected token count: {heatmap_single.size(1)}. Expected 196 or 197."
+        )
     h = w = int(heatmap_single.size(1) ** 0.5)
     if h * w != heatmap_single.size(1):
-        raise RuntimeError(f"Cannot reshape to square grid: {heatmap_single.size(1)} tokens.")
+        raise RuntimeError(
+            f"Cannot reshape to square grid: {heatmap_single.size(1)} tokens."
+        )
     heatmap_single = heatmap_single.reshape(-1, h, w)
 elif grad_single.dim() == 2:
-    raise RuntimeError("Got only 2D gradient (batch, 768). Hook an earlier layer that feeds CLS via attention.")
+    raise RuntimeError(
+        "Got only 2D gradient (batch, 768). Hook an earlier layer that feeds CLS via attention."
+    )
 else:
     raise RuntimeError(f"Unexpected grad shape: {grad_single.shape}")
 
@@ -211,13 +229,18 @@ eps = 1e-6
 denom = heatmap_single.abs().max()
 heatmap_single = heatmap_single / (denom + eps)
 
-torch.save({
-    "heatmap": heatmap_single.detach().cpu(),
-    "layer": layer_label,
-    "class_idx": target_class,
-}, "out/vit_crp_heatmap_tokens.pt")
+torch.save(
+    {
+        "heatmap": heatmap_single.detach().cpu(),
+        "layer": layer_label,
+        "class_idx": target_class,
+    },
+    "out/vit_crp_heatmap_tokens.pt",
+)
 
-imgify(heatmap_single.unsqueeze(1).detach().cpu(), symmetric=True, grid=(1, 1)).save('out/vit_crp_heatmap_tokens.png')
+imgify(heatmap_single.unsqueeze(1).detach().cpu(), symmetric=True, grid=(1, 1)).save(
+    "out/vit_crp_heatmap_tokens.png"
+)
 
 # %%
 # Check raw heatmaps before normalization
@@ -248,26 +271,28 @@ if lrp_class_idx is not None:
     print(f"LRP heatmap class idx: {lrp_class_idx}")
     print(f"CRP heatmap class idx: {target_class}")
 
-imgify(diff_map_crp.detach().cpu(), symmetric=True, grid=(1, 1)).save('out/diff_map_crp.png')
+imgify(diff_map_crp.detach().cpu(), symmetric=True, grid=(1, 1)).save(
+    "out/diff_map_crp.png"
+)
 
 # %%
 print(diff_map_crp.type)
 imgify(diff_map_crp.detach().cpu(), symmetric=True, grid=(1, 1))
 
 # %%
-display(DisplayImage('out/lxt_style_result.png'))
+display(DisplayImage("out/lxt_style_result.png"))
 
-display(DisplayImage('out/vit_crp_heatmap_pass_norm.png'))
+display(DisplayImage("out/vit_crp_heatmap_pass_norm.png"))
 
-display(DisplayImage('out/diff_map.png'))
-display(DisplayImage('out/diff_map_crp.png'))
+display(DisplayImage("out/diff_map.png"))
+display(DisplayImage("out/diff_map_crp.png"))
 
 # %%
 display(image)
-display(DisplayImage('out/vit_crp_heatmap.png'))
+display(DisplayImage("out/vit_crp_heatmap.png"))
 
 # %%
-display(DisplayImage('vit_crp_heatmap.png'))
+display(DisplayImage("vit_crp_heatmap.png"))
 
 # %%
 model, weights = get_vit_imagenet()
@@ -290,15 +315,18 @@ class_name = weights.meta["categories"][target_class]
 print(f"Explaining class: {target_class} ('{class_name}')")
 conditions = [{"y": target_class}]
 
-heatmap_list = [] 
+heatmap_list = []
 
-for conv_gamma, lin_gamma in itertools.product([0.1, 0.25, 100], [0, 0.01, 0.05, 0.1, 1]):
-    
-    composite = LayerMapComposite([
-        (torch.nn.Conv2d, z_rules.Gamma(conv_gamma)),
-        (torch.nn.Linear, z_rules.Gamma(lin_gamma)),
-    ])
-    
+for conv_gamma, lin_gamma in itertools.product(
+    [0.1, 0.25, 100], [0, 0.01, 0.05, 0.1, 1]
+):
+    composite = LayerMapComposite(
+        [
+            (torch.nn.Conv2d, z_rules.Gamma(conv_gamma)),
+            (torch.nn.Linear, z_rules.Gamma(lin_gamma)),
+        ]
+    )
+
     # Run Attribution
     attr = attributor(data, conditions, composite, mask_map=cc.mask)
 
@@ -316,24 +344,15 @@ if stacked_heatmaps.ndim == 5:
 final_tensor = stacked_heatmaps.sum(1)
 
 print(f"Final tensor shape: {final_tensor.shape}")
-imgify(final_tensor, symmetric=True, grid=(3, 5)).save('out/vit_crp_heatmap_chameleon.png')
+imgify(final_tensor, symmetric=True, grid=(3, 5)).save(
+    "out/vit_crp_heatmap_chameleon.png"
+)
 
 # %%
-display(DisplayImage('vit_crp_heatmap_lizard.png'))
+display(DisplayImage("vit_crp_heatmap_lizard.png"))
 
 # %%
-display(DisplayImage('vit_crp_heatmap_chameleon.png'))
+display(DisplayImage("vit_crp_heatmap_chameleon.png"))
 
 # %%
-display(DisplayImage('vit_lrp_heatmap_chameleon.png'))
-
-# %%
-display(DisplayImage('vit_crp_heatmap_chameleon_00.png'))
-
-# %%
-display(DisplayImage('vit_crp_heatmap_chameleon_00.png'))
-
-# %%
-display(DisplayImage('vit_lrp_heatmap_chameleon_00.png'))
-
-
+display(DisplayImage("vit_lrp_heatmap_chameleon.png"))

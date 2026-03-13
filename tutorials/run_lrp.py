@@ -1,13 +1,11 @@
+import numpy as np
 import torch
 import torch.nn as nn
-import numpy as np
-
 import zennit.rules as z_rules
-from zennit.composites import LayerMapComposite
 from lxt.efficient import monkey_patch, monkey_patch_zennit
 from torchvision.models import vision_transformer
-
-from utils import set_determinism, load_sample_and_model
+from utils import load_sample_and_model, set_determinism
+from zennit.composites import LayerMapComposite
 
 
 def run_attention_aware_lrp(model, data, target_class, model_type: str):
@@ -17,10 +15,12 @@ def run_attention_aware_lrp(model, data, target_class, model_type: str):
     # For non-transformer models, skip monkey_patch - standard Zennit is sufficient
     monkey_patch_zennit(verbose=True)
 
-    composite = LayerMapComposite([
-        (nn.Conv2d, z_rules.Gamma(0.25)),
-        (nn.Linear, z_rules.Gamma(0.1)),
-    ])
+    composite = LayerMapComposite(
+        [
+            (nn.Conv2d, z_rules.Gamma(0.25)),
+            (nn.Linear, z_rules.Gamma(0.1)),
+        ]
+    )
 
     data.requires_grad_(True)
     composite.register(model)
@@ -50,9 +50,18 @@ def save_relevance(model_type: str, relevance: np.ndarray):
 def main():
     import argparse
 
-    parser = argparse.ArgumentParser(description="Run LRP and save relevance for a model.")
-    parser.add_argument("--model-type", choices=["mnist_conv", "mnist_linear", "vgg16", "resnet", "vit"], default="vit", help="Model architecture")
-    parser.add_argument("--seed", type=int, default=42, help="Random seed for reproducibility")
+    parser = argparse.ArgumentParser(
+        description="Run LRP and save relevance for a model."
+    )
+    parser.add_argument(
+        "--model-type",
+        choices=["mnist_conv", "mnist_linear", "vgg16", "resnet", "vit"],
+        default="vit",
+        help="Model architecture",
+    )
+    parser.add_argument(
+        "--seed", type=int, default=42, help="Random seed for reproducibility"
+    )
     args = parser.parse_args()
 
     set_determinism(args.seed)
@@ -60,11 +69,14 @@ def main():
 
     data, target_class, model, _ = load_sample_and_model(args.model_type, device)
 
-
     print(model)
-    
-    print(f">>> RUNNING LRP with model '{args.model_type}', target class {target_class}...")
-    rel_lrp = run_attention_aware_lrp(model, data.clone(), target_class, args.model_type)
+
+    print(
+        f">>> RUNNING LRP with model '{args.model_type}', target class {target_class}..."
+    )
+    rel_lrp = run_attention_aware_lrp(
+        model, data.clone(), target_class, args.model_type
+    )
     save_relevance(args.model_type, rel_lrp)
     print("Saved LRP relevance.")
 
