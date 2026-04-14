@@ -7,7 +7,7 @@ from pathlib import Path
 
 def get_layer_names(model: torch.nn.Module, types: List):
     """
-    Retrieves the layer names of all layers that belong to a torch.nn.Module type defined
+    Retrieves the layer names of all layers that belong to a torch.nn.Module type defined 
     in 'types'.
 
     Parameters
@@ -27,9 +27,7 @@ def get_layer_names(model: torch.nn.Module, types: List):
 
     for name, layer in model.named_modules():
         for layer_definition in types:
-            if isinstance(layer, layer_definition) or issubclass(
-                layer.__class__, layer_definition
-            ):
+            if isinstance(layer, layer_definition) or issubclass(layer.__class__, layer_definition):
                 if name not in layer_names:
                     layer_names.append(name)
 
@@ -47,9 +45,8 @@ def abs_norm(rel: torch.Tensor, stabilize=1e-10):
 
     return rel / (abs_sum + stabilize)
 
-
 def max_norm(rel, stabilize=1e-10):
-
+    
     return rel / (rel.max() + stabilize)
 
 
@@ -87,13 +84,10 @@ def load_maximization(path_folder, layer_name):
     filename = f"{layer_name}_"
 
     d_c_sorted = np.load(Path(path_folder) / Path(filename + "data.npy"), mmap_mode="r")
-    rel_c_sorted = np.load(
-        Path(path_folder) / Path(filename + "rel.npy"), mmap_mode="r"
-    )
+    rel_c_sorted = np.load(Path(path_folder) / Path(filename + "rel.npy"), mmap_mode="r")
     rf_c_sorted = np.load(Path(path_folder) / Path(filename + "rf.npy"), mmap_mode="r")
 
     return d_c_sorted, rel_c_sorted, rf_c_sorted
-
 
 def load_stat_targets(path_folder):
 
@@ -106,16 +100,9 @@ def load_statistics(path_folder, layer_name, target):
 
     filename = f"{target}_"
 
-    d_c_sorted = np.load(
-        Path(path_folder) / Path(layer_name) / Path(filename + "data.npy"),
-        mmap_mode="r",
-    )
-    rel_c_sorted = np.load(
-        Path(path_folder) / Path(layer_name) / Path(filename + "rel.npy"), mmap_mode="r"
-    )
-    rf_c_sorted = np.load(
-        Path(path_folder) / Path(layer_name) / Path(filename + "rf.npy"), mmap_mode="r"
-    )
+    d_c_sorted = np.load(Path(path_folder) / Path(layer_name) / Path(filename + "data.npy"), mmap_mode="r")
+    rel_c_sorted = np.load(Path(path_folder) / Path(layer_name) / Path(filename + "rel.npy"), mmap_mode="r")
+    rf_c_sorted = np.load(Path(path_folder) / Path(layer_name) / Path(filename + "rf.npy"), mmap_mode="r")
 
     return d_c_sorted, rel_c_sorted, rf_c_sorted
 
