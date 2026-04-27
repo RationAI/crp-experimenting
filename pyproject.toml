@@ -1,11 +1,11 @@
 [project]
-name = "zennit-crp"
+name = "crp-experimenting" 
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11,<3.12"
 dependencies = [
-    "zennit==0.5.1",
+    "zennit==0.4.6",
     "torch==2.6.0",
     "numpy<=1.23.5",
     "tqdm",
@@ -14,7 +14,6 @@ dependencies = [
     "scipy>=1.15.2",
     "torchvision>=0.14.1",
     "pillow>=11.2.1",
-    "pillow-simd>=9.5.0.post2",
     "jupyter>=1.1.1",
     "ipywidgets>=8.1.7",
     "mlflow>=3.1.0",
@@ -31,7 +30,15 @@ dependencies = [
     "open_clip_torch",
     "lxt",
     "huggingface-hub>=0.35.3",
+    "pre-commit>=4.5.1",
+    "zennit-crp", 
+]
+
+[tool.uv]
+override-dependencies = [
+    "torch==2.6.0",
 ]
 
 [tool.uv.sources]
 rationai-mlkit = { git = "ssh://git@gitlab.ics.muni.cz/rationai/digital-pathology/libraries/mlkit.git" }
+zennit-crp = { git = "https://github.com/RationAI/zennit-crp.git", branch = "transformer" }
