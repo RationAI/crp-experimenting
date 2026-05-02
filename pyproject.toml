@@ -28,10 +28,10 @@ dependencies = [
     "tabulate",
     "bitsandbytes",
     "open_clip_torch",
-    "lxt",
     "huggingface-hub>=0.35.3",
     "pre-commit>=4.5.1",
     "zennit-crp", 
+    "pytest",
 ]
 
 [tool.uv]
@@ -41,4 +41,4 @@ override-dependencies = [
 
 [tool.uv.sources]
 rationai-mlkit = { git = "ssh://git@gitlab.ics.muni.cz/rationai/digital-pathology/libraries/mlkit.git" }
-zennit-crp = { git = "https://github.com/RationAI/zennit-crp.git", branch = "transformer" }
+zennit-crp = { git = "https://github.com/RationAI/zennit-crp.git", branch = "experimental_transformer" }
