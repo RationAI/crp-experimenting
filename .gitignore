@@ -170,6 +170,7 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 .idea/
 
+ImageNet_data/
 tutorials/ImageNet_data/
 tutorials/VGG16_ImageNet/
 tutorials/VGG16_Prostate/
@@ -178,3 +179,5 @@ tutorials/VGG16_Prostate/
 *.zip
 
 LRP-eXplains-Transformers-main
+cache/get_max_reference/vis_opaque_img/
+cache/get_max_reference

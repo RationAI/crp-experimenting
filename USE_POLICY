@@ -1,60 +1,65 @@
-MIT License
 
-Copyright (c) 2024 RationAI
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+<!doctype html>
+<!--[if lte IE 9]>    <html lang="cs" class="old-browser no-js no-touch"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="cs" class="ie9 no-js no-touch"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html class="no-js" lang="cs">
+<!--<![endif]-->
+<head>
+    
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.>
+    <meta name="robots" content="index, follow">
+
+<title>Masarykova univerzita</title>
+
+<meta name="twitter:site" content="@muni_cz">
+<meta name="twitter:card" content="summary">
+
+    <meta name="author" content="Masarykova univerzita" />
+    <meta name="twitter:title" content="Masarykova univerzita | Masarykova univerzita" />
+    <meta property="og:title" content="Masarykova univerzita | Masarykova univerzita" />
+    <meta property="og:image" content="https://cdn.muni.cz/media/3220167/campus_pano_resized.png?upscale=false&width=1200" />
+    <meta name="twitter:image" content="https://cdn.muni.cz/media/3220167/campus_pano_resized.png?upscale=false&width=1200" />
     <meta property="og:url" content="https://www.muni.cz/" />
     <meta property="og:site_name" content="Masarykova univerzita" />
 
 
             <link rel="stylesheet" type="text/css" href="https://cdn.muni.cz/css/MuniWeb/MUNI/style.33f4ae1c5f8af545f40b.css" />
-<script type="text/javascript" nonce="2b68faac-cddf-4e27-bf5f-85f3970888ce">/*! For license information please see muniweb-critical.f2b8e652ef8f9f2a5db3.js.LICENSE.txt */
+<script type="text/javascript" nonce="ec6145e3-eece-49c0-adc8-f1849cd38039">/*! For license information please see muniweb-critical.f2b8e652ef8f9f2a5db3.js.LICENSE.txt */
 !function(){function e(n){return e="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},e(n)}!function(n,t){function o(n,t){return e(n)===t}function i(){return"function"!=typeof t.createElement?t.createElement(arguments[0]):u?t.createElementNS.call(t,"http://www.w3.org/2000/svg",arguments[0]):t.createElement.apply(t,arguments)}function a(){var e=t.body;return e||((e=i(u?"svg":"body")).fake=!0),e}var s=[],c=[],r={_version:"3.3.1",_config:{classPrefix:"",enableClasses:!0,enableJSClass:!0,usePrefixes:!0},_q:[],on:function(e,n){var t=this;setTimeout((function(){n(t[e])}),0)},addTest:function(e,n,t){c.push({name:e,fn:n,options:t})},addAsyncTest:function(e){c.push({name:null,fn:e})}},l=function(){};l.prototype=r,l=new l;var d=t.documentElement,u="svg"===d.nodeName.toLowerCase(),f=r._config.usePrefixes?" -webkit- -moz- -o- -ms- ".split(" "):["",""];r._prefixes=f;var m=r.testStyles=function(e,n,o,s){var c,r,l,u,f="modernizr",m=i("div"),p=a();if(parseInt(o,10))for(;o--;)(l=i("div")).id=s?s[o]:f+(o+1),m.appendChild(l);return(c=i("style")).type="text/css",c.id="s"+f,(p.fake?p:m).appendChild(c),p.appendChild(m),c.styleSheet?c.styleSheet.cssText=e:c.appendChild(t.createTextNode(e)),m.id=f,p.fake&&(p.style.background="",p.style.overflow="hidden",u=d.style.overflow,d.style.overflow="hidden",d.appendChild(p)),r=n(m,e),p.fake?(p.parentNode.removeChild(p),d.style.overflow=u,d.offsetHeight):m.parentNode.removeChild(m),!!r};l.addTest("touch",(function(){var e;if("ontouchstart"in n||n.DocumentTouch&&t instanceof DocumentTouch)e=!0;else{var o=["@media (",f.join("touch-enabled),("),"heartz",")","{#modernizr{top:9px;position:absolute}}"].join("");m(o,(function(n){e=9===n.offsetTop}))}return e})),function(){var e,n,t,i,a,r;for(var d in c)if(c.hasOwnProperty(d)){if(e=[],(n=c[d]).name&&(e.push(n.name.toLowerCase()),n.options&&n.options.aliases&&n.options.aliases.length))for(t=0;t<n.options.aliases.length;t++)e.push(n.options.aliases[t].toLowerCase());for(i=o(n.fn,"function")?n.fn():n.fn,a=0;a<e.length;a++)1===(r=e[a].split(".")).length?l[r[0]]=i:(!l[r[0]]||l[r[0]]instanceof Boolean||(l[r[0]]=new Boolean(l[r[0]])),l[r[0]][r[1]]=i),s.push((i?"":"no-")+r.join("-"))}}(),function(e){var n=d.className,t=l._config.classPrefix||"";if(u&&(n=n.baseVal),l._config.enableJSClass){var o=new RegExp("(^|\\s)"+t+"no-js(\\s|$)");n=n.replace(o,"$1"+t+"js$2")}l._config.enableClasses&&(n+=" "+t+e.join(" "+t),u?d.className.baseVal=n:d.className=n)}(s),delete r.addTest,delete r.addAsyncTest;for(var p=0;p<l._q.length;p++)l._q[p]();n.Modernizr=l}(window,document),(navigator.maxTouchPoints>0||navigator.msMaxTouchPoints>0)&&(document.documentElement.className=document.documentElement.className.replace("no-touch","touch"))}(),function(e){e.oneTimeEvent=function(e,n,t){(t=t||document).addEventListener(e,(function t(o){return document.removeEventListener(e,t),n(o)}),!1)},e.isDocumentReady=!1,document.addEventListener("DocumentReady",(function(){e.isDocumentReady=!0})),e.elementReady=function(n,t){e.isDocumentReady?e.oneTimeEvent("ElementsReady."+n,t):e.oneTimeEvent("DocumentReady",t)},e.elementsReady=function(e,n){var t=function(o){e(o),!1!==n&&document.removeEventListener("ElementsReady",t)};document.addEventListener("ElementsReady",t,!1)},e.documentReady=function(e){document.addEventListener("DocumentReady",e,!1)};var n={};e.dictionary=function(e,t){if(null==t)return n[e];n[e]=t};var t={};e.items=function(e,n){if(null==n)return t[e];t[e]=n}}(window.Page=window.Page||{}),window.addEventListener("mc-consent",(function(e){e.detail.includes("mc-analytics")&&window.clarity&&window.clarity("consent")}));</script>
 
 
-<script nonce="2b68faac-cddf-4e27-bf5f-85f3970888ce" data-gtm>
+<script nonce="ec6145e3-eece-49c0-adc8-f1849cd38039" data-gtm>
         window.gtm = {'data':{'code':{'v':'2.1'},'page':{'locale':'cs','title':'Masarykova univerzita'},'user':{'ip':'10.16.48.0'}},'trail':{'page.trail':'Masarykova univerzita'}};
     window.dataLayer = window.dataLayer || [];
     dataLayer.push(window.gtm.data);
     dataLayer.push(window.gtm.trail);
     dataLayer.push({'event':'page'});
-</script><script nonce="2b68faac-cddf-4e27-bf5f-85f3970888ce">window.dataLayer = window.dataLayer || [];function gtag() { dataLayer.push(arguments); }gtag('consent', 'default', {'analytics_storage': 'denied','ad_user_data': 'denied','ad_personalization': 'denied','ad_storage': 'denied',});</script>
-<script nonce="2b68faac-cddf-4e27-bf5f-85f3970888ce" type="text/javascript" class="">
+</script><script nonce="ec6145e3-eece-49c0-adc8-f1849cd38039">window.dataLayer = window.dataLayer || [];function gtag() { dataLayer.push(arguments); }gtag('consent', 'default', {'analytics_storage': 'denied','ad_user_data': 'denied','ad_personalization': 'denied','ad_storage': 'denied',});</script>
+<script nonce="ec6145e3-eece-49c0-adc8-f1849cd38039" type="text/javascript" class="">
     (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;var n=d.querySelector('[nonce]');
     n&&j.setAttribute('nonce',n.nonce||n.getAttribute('nonce'));f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-5LQKVJ');</script><script nonce="2b68faac-cddf-4e27-bf5f-85f3970888ce" type="text/plain" class="mc-analytics">
+    })(window,document,'script','dataLayer','GTM-5LQKVJ');</script><script nonce="ec6145e3-eece-49c0-adc8-f1849cd38039" type="text/plain" class="mc-analytics">
     var _mtm = _mtm || [];
     _mtm.push({ 'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start' });
     var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
     g.type = 'text/javascript'; g.async = true; g.defer = true; g.src = 'https://analytics.ics.muni.cz/js/container_pxW9uzHE.js'; s.parentNode.insertBefore(g, s);
 </script>
-        <script nonce="2b68faac-cddf-4e27-bf5f-85f3970888ce" type="text/javascript">
+        <script nonce="ec6145e3-eece-49c0-adc8-f1849cd38039" type="text/javascript">
             (function (c, l, a, r, i, t, y) {
                 c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
                 t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
                 y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
             })(window, document, "clarity", "script", "ku57fhseug");
         </script>
-<script nonce="2b68faac-cddf-4e27-bf5f-85f3970888ce" type="text/javascript" class="mc-analytics">
+<script nonce="ec6145e3-eece-49c0-adc8-f1849cd38039" type="text/javascript" class="mc-analytics">
     var _paq = window._paq = window._paq || [];
     
         _paq.push(['disableCookies']);
@@ -1875,19 +1880,19 @@ Aktuálně
     <div class="btn-dropdown__menu add-calendar btn-dropdown__menu--up btn-dropdown__menu--right-align">
         <div class="btn-dropdown__list">
             <div class="btn-dropdown__item">
-                <a href="https://calendar.google.com/calendar/r/settings/addbyurl?cid=webcal%3a%2f%2fwww.muni.cz%3a443%2fUmbraco%2fApi%2fNewsEventsApi%2fGetCalendar%3fmodule%3dDevGsnRQyKuJdYn0sazJIL%252fqm9xGMkTWR9VSEsII0VjXeG5PYvHjSAl4DyRXtuKJNQrr2Q%253d%253d%26lang%3dcs" class="btn-dropdown__link" target="_blank" rel="noopener">
+                <a href="https://calendar.google.com/calendar/r/settings/addbyurl?cid=webcal%3a%2f%2fwww.muni.cz%3a443%2fUmbraco%2fApi%2fNewsEventsApi%2fGetCalendar%3fmodule%3d%252fLmjijfLjbD4v0XFmWX06xtz073LaX9J64bbLtkjx0rQSGSONV8VZNyxh0oEhcL4kTG0kA%253d%253d%26lang%3dcs" class="btn-dropdown__link" target="_blank" rel="noopener">
                     Přidat do kalend&#225;ře Google
                     <span class="icon icon-google" style="font-size: inherit"></span>
                 </a>
             </div>
             <div class="btn-dropdown__item">
-                <a href="https://outlook.office.com/calendar/addcalendar?url=webcal%3a%2f%2fwww.muni.cz%3a443%2fUmbraco%2fApi%2fNewsEventsApi%2fGetCalendar%3fmodule%3dDevGsnRQyKuJdYn0sazJIL%252fqm9xGMkTWR9VSEsII0VjXeG5PYvHjSAl4DyRXtuKJNQrr2Q%253d%253d%26lang%3dcs" class="btn-dropdown__link" target="_blank" rel="noopener">
+                <a href="https://outlook.office.com/calendar/addcalendar?url=webcal%3a%2f%2fwww.muni.cz%3a443%2fUmbraco%2fApi%2fNewsEventsApi%2fGetCalendar%3fmodule%3d%252fLmjijfLjbD4v0XFmWX06xtz073LaX9J64bbLtkjx0rQSGSONV8VZNyxh0oEhcL4kTG0kA%253d%253d%26lang%3dcs" class="btn-dropdown__link" target="_blank" rel="noopener">
                     Přidat do kalend&#225;ře Microsoft 365 – web
                     <span class="icon icon-microsoft" style="font-size: inherit"></span>
                 </a>
             </div>
             <div class="btn-dropdown__item">
-                <a href="webcals://www.muni.cz:443/Umbraco/Api/NewsEventsApi/GetCalendar?module=DevGsnRQyKuJdYn0sazJIL%2fqm9xGMkTWR9VSEsII0VjXeG5PYvHjSAl4DyRXtuKJNQrr2Q%3d%3d&amp;lang=cs" class="btn-dropdown__link" target="_blank" rel="noopener">
+                <a href="webcals://www.muni.cz:443/Umbraco/Api/NewsEventsApi/GetCalendar?module=%2fLmjijfLjbD4v0XFmWX06xtz073LaX9J64bbLtkjx0rQSGSONV8VZNyxh0oEhcL4kTG0kA%3d%3d&amp;lang=cs" class="btn-dropdown__link" target="_blank" rel="noopener">
                     Přidat do kalend&#225;ře Microsoft 365 – PC
                     <span class="icon icon-microsoft" style="font-size: inherit"></span>
                 </a>
@@ -1902,19 +1907,19 @@ Aktuálně
     <div class="btn-dropdown__menu add-calendar btn-dropdown__menu--up btn-dropdown__menu--right-align">
         <div class="btn-dropdown__list">
             <div class="btn-dropdown__item">
-                <a href="https://calendar.google.com/calendar/r/settings/addbyurl?cid=webcal%3a%2f%2fwww.muni.cz%3a443%2fUmbraco%2fApi%2fNewsEventsApi%2fGetCalendar%3fmodule%3dxGfCB8cM7oodhQvqDGlQ0l7jhEQLEZxrEDHtWDpgbHkyc9zCmB0eFEGt1wmqQ75FYmpc8A%253d%253d%26lang%3dcs" class="btn-dropdown__link" target="_blank" rel="noopener">
+                <a href="https://calendar.google.com/calendar/r/settings/addbyurl?cid=webcal%3a%2f%2fwww.muni.cz%3a443%2fUmbraco%2fApi%2fNewsEventsApi%2fGetCalendar%3fmodule%3daO96fjwvlEOozuTwv1TNeqYVd%252bqPkCYv3vIweQ%252fLuxyPIS3U%252fGP23u%252bv0yxYNJsk0DCJaQ%253d%253d%26lang%3dcs" class="btn-dropdown__link" target="_blank" rel="noopener">
                     Přidat do kalend&#225;ře Google
                     <span class="icon icon-google" style="font-size: inherit"></span>
                 </a>
             </div>
             <div class="btn-dropdown__item">
-                <a href="https://outlook.office.com/calendar/addcalendar?url=webcal%3a%2f%2fwww.muni.cz%3a443%2fUmbraco%2fApi%2fNewsEventsApi%2fGetCalendar%3fmodule%3dxGfCB8cM7oodhQvqDGlQ0l7jhEQLEZxrEDHtWDpgbHkyc9zCmB0eFEGt1wmqQ75FYmpc8A%253d%253d%26lang%3dcs" class="btn-dropdown__link" target="_blank" rel="noopener">
+                <a href="https://outlook.office.com/calendar/addcalendar?url=webcal%3a%2f%2fwww.muni.cz%3a443%2fUmbraco%2fApi%2fNewsEventsApi%2fGetCalendar%3fmodule%3daO96fjwvlEOozuTwv1TNeqYVd%252bqPkCYv3vIweQ%252fLuxyPIS3U%252fGP23u%252bv0yxYNJsk0DCJaQ%253d%253d%26lang%3dcs" class="btn-dropdown__link" target="_blank" rel="noopener">
                     Přidat do kalend&#225;ře Microsoft 365 – web
                     <span class="icon icon-microsoft" style="font-size: inherit"></span>
                 </a>
             </div>
             <div class="btn-dropdown__item">
-                <a href="webcals://www.muni.cz:443/Umbraco/Api/NewsEventsApi/GetCalendar?module=xGfCB8cM7oodhQvqDGlQ0l7jhEQLEZxrEDHtWDpgbHkyc9zCmB0eFEGt1wmqQ75FYmpc8A%3d%3d&amp;lang=cs" class="btn-dropdown__link" target="_blank" rel="noopener">
+                <a href="webcals://www.muni.cz:443/Umbraco/Api/NewsEventsApi/GetCalendar?module=aO96fjwvlEOozuTwv1TNeqYVd%2bqPkCYv3vIweQ%2fLuxyPIS3U%2fGP23u%2bv0yxYNJsk0DCJaQ%3d%3d&amp;lang=cs" class="btn-dropdown__link" target="_blank" rel="noopener">
                     Přidat do kalend&#225;ře Microsoft 365 – PC
                     <span class="icon icon-microsoft" style="font-size: inherit"></span>
                 </a>
@@ -1942,20 +1947,20 @@ Aktuálně
                     <span>Zavř&#237;t</span>
                 </button>
             </p>
-<input name='ufprt' type='hidden' value='dkRtCFXIU/afV0QtQHZN4L56P8KggqlzFMecn1iB9cqupF4dOrh6QL55Q2V6z4UWzyKb3Skegz8j09J/SJ4cllY5GF8hjRVRhUkPItDCgW+l8a0eOIxkUBYu74cYeOpcSYOBYFbP6f4p8K+5Oi4dbJFKUgf9SAnnwecWWlDwrOqcQc27' /></form>    </div>
+<input name='ufprt' type='hidden' value='0Fgb/s+a03w5WvzhJmg57Vt2gfhTjvluYnw8yfBMCLO25WpMZzM58oKVFlo7JH8wWYOexT0FblVaXaHDwsIzKNASbedyH0nqWRwyz+ca7Z91F58VEhStgOxnud9s+f7geN4g7BuyOWcbN+4/h5zUydawL1VlduGYCvSsQubNqqmKGan2' /></form>    </div>
 </div>
-    <script nonce="2b68faac-cddf-4e27-bf5f-85f3970888ce">
+    <script nonce="ec6145e3-eece-49c0-adc8-f1849cd38039">
     !function(i,c){i.muniCookies=c;var s=document.createElement("script");s.src=c.scriptUrl+"main.js",document.head.appendChild(s)}(window,{
         scriptUrl: 'https://cdn.muni.cz/Scripts/libs/muni-cookies/',
         lang: 'cs',
         
         key: '1381a542-4547-47f9-a6fb-706e21fa6bf8'})
 </script>
-<script type="text/javascript" src="https://cdn.muni.cz/css/MuniWeb/_Shared/muniweb.bb1d162bd66f215c8ff7.js" nonce="2b68faac-cddf-4e27-bf5f-85f3970888ce"></script>
+<script type="text/javascript" src="https://cdn.muni.cz/css/MuniWeb/_Shared/muniweb.bb1d162bd66f215c8ff7.js" nonce="ec6145e3-eece-49c0-adc8-f1849cd38039"></script>
 
 
 
-    <script nonce="2b68faac-cddf-4e27-bf5f-85f3970888ce">App.run({}); Page.run();</script>
+    <script nonce="ec6145e3-eece-49c0-adc8-f1849cd38039">App.run({}); Page.run();</script>
     
 </body>
 </html>
