@@ -1,0 +1,3 @@
+Predicted label ('Eskimo dog', 'husky') (id: 248) with probability 0.05536951869726181
+Showing layer features.40
+Top 5 concepts are [133, 151, 310, 71, 472] with relevance [4.844813421368599, 2.9534131288528442, 2.609286829829216, 2.3679547011852264, 2.141880802810192]

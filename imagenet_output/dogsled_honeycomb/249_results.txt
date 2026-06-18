@@ -1,0 +1,3 @@
+Predicted label ('malamute', 'malemute', 'Alaskan malamute') (id: 249) with probability 0.2828347682952881
+Showing layer features.40
+Top 5 concepts are [133, 472, 71, 151, 208] with relevance [5.56044764816761, 3.1760573387145996, 2.450064569711685, 2.1543042734265327, 1.9910367205739021]

@@ -1,0 +1,3 @@
+Predicted label ('barn spider', 'Araneus cavaticus') (id: 73) with probability 0.2722296118736267
+Showing layer features.40
+Top 5 concepts are [228, 461, 225, 433, 153] with relevance [17.26120114326477, 4.922116547822952, 2.7583295479416847, 2.532542683184147, 1.8210666254162788]

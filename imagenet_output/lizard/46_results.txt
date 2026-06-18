@@ -1,0 +1,3 @@
+Predicted label ('green lizard', 'Lacerta viridis') (id: 46) with probability 0.1368330866098404
+Showing layer features.40
+Top 5 concepts are [469, 35, 71, 89, 161] with relevance [8.95390510559082, 5.062784627079964, 4.563407599925995, 1.9460873678326607, 1.9295500591397285]

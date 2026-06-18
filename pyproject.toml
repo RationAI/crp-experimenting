@@ -1,25 +1,44 @@
 [project]
-name = "rationai-"
+name = "crp-experimenting" 
 version = "0.1.0"
-description = ""
-authors = []
-requires-python = ">=3.11"
+description = "Add your description here"
 readme = "README.md"
-license = { file = "LICENSE" }
-dependencies = []
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "zennit==0.4.6",
+    "torch==2.6.0",
+    "numpy<=1.23.5",
+    "tqdm",
+    "matplotlib",
+    "ipykernel>=6.29.5",
+    "scipy>=1.15.2",
+    "torchvision>=0.14.1",
+    "pillow>=11.2.1",
+    "jupyter>=1.1.1",
+    "ipywidgets>=8.1.7",
+    "mlflow>=3.1.0",
+    "openslide-python>=1.4.2",
+    "albumentations>=1.3.1",
+    "hydra-core>=1.3.2",
+    "lightning>=2.2.5",
+    "rationai-mlkit",
+    "typing-extensions>=4.13.2",
+    "transformers==4.52.4",
+    "accelerate",
+    "tabulate",
+    "bitsandbytes",
+    "open_clip_torch",
+    "huggingface-hub>=0.35.3",
+    "pre-commit>=4.5.1",
+    "zennit-crp", 
+    "pytest",
+]
 
-[tool.pdm.dev-dependencies]
-dev = ["mypy", "pre-commit", "ruff"]
-test = ["pytest", "pytest-cov"]
+[tool.uv]
+override-dependencies = [
+    "torch==2.6.0",
+]
 
-[tool.pdm.scripts]
-l = { composite = ["lint", "format", "mypy"] }
-test = "pytest tests"
-lint = "ruff check --fix"
-format = "ruff format"
-mypy = "mypy ."
-post_install = { composite = [
-    "pre-commit autoupdate",
-    "pre-commit install",
-    "pre-commit install --hook-type commit-msg",
-] }
+[tool.uv.sources]
+rationai-mlkit = { git = "ssh://git@gitlab.ics.muni.cz/rationai/digital-pathology/libraries/mlkit.git" }
+zennit-crp = { git = "https://github.com/RationAI/zennit-crp.git", branch = "experimental_transformer" }

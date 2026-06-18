@@ -1,0 +1,3 @@
+Predicted label ('cheeseburger',) (id: 933) with probability 0.987409770488739
+Showing layer features.40
+Top 5 concepts are [43, 201, 162, 210, 71] with relevance [4.863019660115242, 4.833415895700455, 4.333900287747383, 2.8453821316361427, 2.539856918156147]
